@@ -1,0 +1,949 @@
+/* =====================================================
+   FERNANDO MONFARDINI — Identidade Visual
+   style.css — v1.0
+   Arquitetura: Mobile-first, BEM-like, CSS Custom Properties
+   ===================================================== */
+
+/* =====================================================
+   0. RESET & BASE
+   ===================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .fade-in { opacity: 1 !important; transform: none !important; }
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  background-color: var(--color-grafite);
+  color: var(--color-offwhite);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul { list-style: none; }
+
+/* =====================================================
+   1. VARIÁVEIS (Design Tokens)
+   ===================================================== */
+:root {
+  /* — Paleta principal — */
+  --color-grafite:        #1C1F23; /* fundo escuro principal */
+  --color-grafite-medio:  #2E3440; /* suporte, cards */
+  --color-offwhite:       #F5F2EC; /* fundo claro */
+  --color-ocre:           #A07840; /* acento premium */
+  --color-cinza-claro:    #D4D1CB; /* texto secundário */
+  --color-verde-petroleo: #1E3A3A; /* exclusivo CNF */
+  --color-ardosia:        #4A5568; /* copyright, suporte */
+
+  /* — Tipografia — */
+  --font-titulo:  'Lora', Georgia, serif;
+  --font-body:    'Poppins', system-ui, sans-serif;
+
+  /* — Espaçamentos — */
+  --section-padding: 6rem 1.25rem;
+  --container-max:   900px;
+  --gap-cards:       1.5rem;
+
+  /* — Bordas & Raios — */
+  --radius-card:  4px;
+  --border-ocre:  2px solid var(--color-ocre);
+
+  /* — Transições — */
+  --transition-fast: 200ms ease;
+  --transition-med:  350ms ease;
+}
+
+/* =====================================================
+   2. UTILITÁRIOS
+   ===================================================== */
+
+/* Container de largura máxima */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Linha decorativa ocre */
+.section-line {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background-color: var(--color-ocre);
+  margin-bottom: 1rem;
+}
+
+.section-line--after {
+  margin-bottom: 0;
+  margin-top: 0.75rem;
+}
+
+/* Cabeçalho de seção */
+.section-header {
+  margin-bottom: 3rem;
+}
+
+/* Título H2 de seção */
+.section-title {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: var(--color-grafite);
+  letter-spacing: 0.01em;
+}
+
+.section-title--light {
+  color: var(--color-offwhite);
+}
+
+/* Fade-in de entrada (estado inicial — JS adiciona .visible) */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s var(--transition-med),
+              transform 0.65s var(--transition-med);
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay escalonado para cards */
+.fade-in:nth-child(2) { transition-delay: 0.1s; }
+.fade-in:nth-child(3) { transition-delay: 0.2s; }
+.fade-in:nth-child(4) { transition-delay: 0.3s; }
+.fade-in:nth-child(5) { transition-delay: 0.4s; }
+
+/* =====================================================
+   3. NAV — sticky, surge ao scroll
+   ===================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(28, 31, 35, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(160, 120, 64, 0.15);
+
+  /* Inicia invisível — JS adiciona .nav--visible ao scrollar */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: opacity var(--transition-med),
+              transform var(--transition-med);
+}
+
+.nav--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav__inner {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Logo/monograma da nav */
+.nav__logo {
+  font-family: var(--font-titulo);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-ocre);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.nav__logo:hover { opacity: 0.8; }
+
+/* Links da nav */
+.nav__links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.nav__link {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--color-cinza-claro);
+  text-transform: none;
+  transition: color var(--transition-fast);
+}
+
+.nav__link:hover,
+.nav__link:focus-visible {
+  color: var(--color-ocre);
+  outline: none;
+}
+
+/* =====================================================
+   4. HERO
+   ===================================================== */
+.hero {
+  min-height: 100dvh;
+  min-height: 100vh; /* fallback */
+  background-color: var(--color-grafite);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 5rem 1.25rem 4rem;
+  position: relative;
+  text-align: center;
+}
+
+/* Foto profissional */
+.hero__photo-wrap {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2px solid var(--color-ocre);
+  overflow: hidden;
+  flex-shrink: 0;
+  /* Quando não há foto, mostra um placeholder cinza */
+  background-color: var(--color-grafite-medio);
+}
+
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  /* Tratamento P&B via CSS */
+  filter: grayscale(100%) contrast(1.05);
+  transition: filter var(--transition-med);
+}
+
+.hero__photo:hover { filter: grayscale(60%) contrast(1.05); }
+
+/* Identidade textual */
+.hero__identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* "F E R N A N D O" */
+.hero__firstname {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+  letter-spacing: 0.45em;
+  color: var(--color-cinza-claro);
+  text-transform: uppercase;
+}
+
+/* "MONFARDINI" — H1 principal */
+.hero__lastname {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  color: var(--color-offwhite);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+/* Tagline em itálico ocre */
+.hero__tagline {
+  font-family: var(--font-titulo);
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--color-ocre);
+  margin-top: 0.25rem;
+}
+
+/* Frase de impacto */
+.hero__statement {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  color: var(--color-cinza-claro);
+  max-width: 520px;
+  line-height: 1.75;
+  margin-top: 0.5rem;
+}
+
+/* Ícones sociais no hero */
+.hero__social {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.hero__social-link {
+  color: var(--color-cinza-claro);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.hero__social-link svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+}
+
+.hero__social-link:hover,
+.hero__social-link:focus-visible {
+  color: var(--color-ocre);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+/* Seta de scroll down */
+.hero__scroll-arrow {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-cinza-claro);
+  display: flex;
+  animation: bounce 2.2s ease-in-out infinite;
+  transition: color var(--transition-fast);
+}
+
+.hero__scroll-arrow svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.5;
+}
+
+.hero__scroll-arrow:hover { color: var(--color-ocre); }
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
+}
+
+/* =====================================================
+   5. SOBRE
+   ===================================================== */
+.sobre {
+  background-color: var(--color-offwhite);
+  padding: var(--section-padding);
+}
+
+.sobre .section-title { margin-bottom: 0; }
+
+.sobre__texto {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(1rem, 2.5vw, 1.0625rem);
+  color: var(--color-grafite-medio);
+  max-width: 700px;
+  line-height: 1.8;
+}
+
+/* =====================================================
+   5b. RECONHECIMENTOS (dentro do Sobre)
+   ===================================================== */
+.reconhecimentos {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-cinza-claro);
+}
+
+.reconhecimentos__titulo {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ardosia);
+  margin-bottom: 1.5rem;
+}
+
+.reconhecimentos__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* gap visual via border-bottom */
+}
+
+/* Item de reconhecimento */
+.rec__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(212, 209, 203, 0.5);
+}
+
+.rec__item:first-child {
+  border-top: 1px solid rgba(212, 209, 203, 0.5);
+}
+
+/* Badge de ano */
+.rec__ano {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: var(--color-ocre);
+  flex-shrink: 0;
+  min-width: 2.5rem;
+  padding-top: 0.1rem;
+}
+
+.rec__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/* Link clicável do reconhecimento */
+.rec__link {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--color-grafite);
+  transition: color var(--transition-fast);
+}
+
+a.rec__link:hover,
+a.rec__link:focus-visible {
+  color: var(--color-ocre);
+  outline: none;
+}
+
+/* Versão sem link (2026) */
+.rec__link--plain {
+  color: var(--color-grafite-medio);
+}
+
+/* Fonte/veículo do reconhecimento */
+.rec__fonte {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: var(--color-ardosia);
+  letter-spacing: 0.02em;
+}
+
+/* =====================================================
+   6. CAPACIDADES
+   ===================================================== */
+.capacidades {
+  background-color: var(--color-grafite);
+  padding: var(--section-padding);
+}
+
+.capacidades .section-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Grid dos cards: 1 col mobile → 2 cols tablet → 3+2 desktop */
+.cap__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap-cards);
+}
+
+/* Card de capacidade */
+.cap__card {
+  background-color: var(--color-grafite-medio);
+  border-top: 3px solid var(--color-ocre);
+  border-radius: var(--radius-card);
+  padding: 2rem 1.75rem;
+  transition: transform var(--transition-med),
+              box-shadow var(--transition-med),
+              border-color var(--transition-med);
+  cursor: default;
+}
+
+.cap__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border-color: #c4a060; /* ocre mais brilhante no hover */
+}
+
+/* Ícone ocre */
+.cap__icon {
+  width: 28px;
+  height: 28px;
+  stroke: var(--color-ocre);
+  stroke-width: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Título do card */
+.cap__titulo {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--color-offwhite);
+  margin-bottom: 0.625rem;
+  letter-spacing: 0.01em;
+}
+
+/* Descrição do card */
+.cap__desc {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: var(--color-cinza-claro);
+  line-height: 1.7;
+}
+
+/* =====================================================
+   7. COMPLIANCE NO FUTEBOL
+   ===================================================== */
+.cnf {
+  background-color: var(--color-verde-petroleo);
+  padding: var(--section-padding);
+}
+
+.cnf__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* Logo placeholder */
+.cnf__logo-wrap {
+  width: 140px;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cnf__logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* Fallback: se a imagem não carregar, esconde */
+  font-size: 0;
+}
+
+.cnf__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Badge "Uma iniciativa" */
+.cnf__badge {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-cinza-claro);
+  text-transform: uppercase;
+}
+
+/* Título da seção */
+.cnf__titulo {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  color: var(--color-offwhite);
+  line-height: 1.2;
+}
+
+/* Descrição */
+.cnf__desc {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+  color: var(--color-offwhite);
+  max-width: 560px;
+  line-height: 1.75;
+  opacity: 0.9;
+}
+
+/* Botão CTA */
+.cnf__cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: 1.5px solid var(--color-offwhite);
+  color: var(--color-offwhite);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-card);
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast);
+}
+
+.cnf__cta:hover,
+.cnf__cta:focus-visible {
+  background-color: var(--color-offwhite);
+  color: var(--color-verde-petroleo);
+  outline: none;
+}
+
+/* =====================================================
+   8. PUBLICAÇÕES
+   ===================================================== */
+.publicacoes {
+  background-color: var(--color-offwhite);
+  padding: var(--section-padding);
+}
+
+/* Layout do livro */
+.pub__livro {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* Capa do livro */
+.pub__livro-capa {
+  width: 100%;
+  max-width: 200px;
+  flex-shrink: 0;
+}
+
+.pub__livro-img {
+  width: 100%;
+  border-radius: var(--radius-card);
+  box-shadow: 0 4px 20px rgba(28, 31, 35, 0.18);
+  /* Placeholder visual enquanto não há imagem */
+  background-color: var(--color-grafite-medio);
+  min-height: 270px;
+  object-fit: cover;
+}
+
+/* Informações do livro */
+.pub__livro-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.pub__livro-titulo {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 3vw, 1.625rem);
+  color: var(--color-grafite);
+}
+
+.pub__livro-desc {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.9375rem;
+  color: var(--color-grafite-medio);
+  line-height: 1.75;
+  max-width: 500px;
+}
+
+.pub__livro-link {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--color-ocre);
+  letter-spacing: 0.02em;
+  transition: opacity var(--transition-fast);
+}
+
+.pub__livro-link:hover { opacity: 0.75; }
+
+/* Seção "Na mídia" */
+.pub__midia-titulo {
+  font-family: var(--font-titulo);
+  font-weight: 400;
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  color: var(--color-grafite);
+  margin-bottom: 1.5rem;
+}
+
+/* Container dos artigos renderizados via JS */
+.pub__artigos {
+  display: flex;
+  flex-direction: column;
+  gap: 1px; /* gap visual via border-bottom dos items */
+}
+
+/* Card de artigo (gerado via JS) */
+.artigo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.125rem 0;
+  border-bottom: 1px solid var(--color-cinza-claro);
+  transition: color var(--transition-fast);
+}
+
+.artigo-card:first-child { border-top: 1px solid var(--color-cinza-claro); }
+
+.artigo-card__titulo {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--color-grafite);
+  transition: color var(--transition-fast);
+}
+
+.artigo-card:hover .artigo-card__titulo { color: var(--color-ocre); }
+
+.artigo-card__meta {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: var(--color-ardosia);
+  letter-spacing: 0.02em;
+}
+
+/* Separação entre Artigos e Notícias */
+.pub__midia--noticias {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-cinza-claro);
+}
+
+/* =====================================================
+   9. FOOTER / CONTATO
+   ===================================================== */
+.footer {
+  background-color: var(--color-grafite);
+  padding: 5rem 1.25rem 3rem;
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+/* Monograma */
+.footer__mono-img {
+  width: 72px;
+  height: 72px;
+  /* Fallback se SVG não carregar */
+  background-color: transparent;
+}
+
+/* Tagline */
+.footer__tagline {
+  font-family: var(--font-titulo);
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: var(--color-ocre);
+}
+
+/* Ícones sociais do footer */
+.footer__social {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+.footer__social-link {
+  color: var(--color-cinza-claro);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.footer__social-link svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+}
+
+.footer__social-link:hover,
+.footer__social-link:focus-visible {
+  color: var(--color-ocre);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+/* Copyright */
+.footer__copy {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: var(--color-ardosia);
+  margin-top: 0.5rem;
+}
+
+/* =====================================================
+   10. RESPONSIVIDADE
+   ===================================================== */
+
+/* — 480px: Pequenos ajustes — */
+@media (min-width: 480px) {
+  .hero__photo-wrap {
+    width: 180px;
+    height: 180px;
+  }
+
+  .cap__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* — 768px: Tablet — */
+@media (min-width: 768px) {
+  :root {
+    --section-padding: 7rem 1.5rem;
+    --gap-cards: 1.75rem;
+  }
+
+  .nav__links {
+    gap: 2.5rem;
+  }
+
+  .hero {
+    flex-direction: row;
+    text-align: left;
+    justify-content: center;
+    gap: 4rem;
+    padding: 5rem 2rem 4rem;
+  }
+
+  .hero__photo-wrap {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+  }
+
+  .hero__identity {
+    align-items: flex-start;
+    max-width: 480px;
+  }
+
+  .hero__social { justify-content: flex-start; }
+
+  .cap__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* 5º card centralizado quando grid 3 cols */
+  .cap__card:last-child {
+    grid-column: 2 / 3;
+  }
+
+  /* Ajuste para quando há exatamente 5 cards: últimos 2 centralizados */
+  .cap__card:nth-last-child(2) {
+    grid-column: 1 / 2;
+  }
+
+  .cnf__inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .pub__livro {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .pub__livro-capa {
+    max-width: 170px;
+  }
+}
+
+/* — 1024px: Desktop médio — */
+@media (min-width: 1024px) {
+  :root {
+    --container-max: 960px;
+    --section-padding: 8rem 2rem;
+  }
+
+  .hero__photo-wrap {
+    width: 220px;
+    height: 220px;
+  }
+
+  .hero {
+    gap: 5rem;
+  }
+
+  /* Grid capacidades: 3 na primeira linha, 2 centralizados na segunda */
+  .cap__grid {
+    grid-template-columns: repeat(3, 1fr);
+    /* Usamos sub-grid trick via nth-child no CSS abaixo */
+  }
+}
+
+/* — 1200px: Desktop largo — */
+@media (min-width: 1200px) {
+  :root {
+    --container-max: 1040px;
+  }
+
+  .hero {
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+}
+
+/* =====================================================
+   11. ACESSIBILIDADE — Focus visible
+   ===================================================== */
+:focus-visible {
+  outline: 2px solid var(--color-ocre);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* =====================================================
+   12. PRINT — desativa animações
+   ===================================================== */
+@media print {
+  .nav,
+  .hero__scroll-arrow { display: none; }
+  .fade-in { opacity: 1 !important; transform: none !important; }
+  body { background: #F5F2EC; color: #1C1F23; }
+}
