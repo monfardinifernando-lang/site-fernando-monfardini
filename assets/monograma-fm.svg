@@ -1,41 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Monograma FM — Fernando Monfardini">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Monograma FM — Fernando Monfardini">
   <title>FM</title>
+
   <!-- Fundo grafite -->
-  <rect width="100" height="100" fill="#1C1F23"/>
+  <rect width="200" height="200" fill="#1C1F23"/>
 
-  <!-- Borda fina em ocre -->
-  <rect x="4" y="4" width="92" height="92" fill="none" stroke="#A07840" stroke-width="1.5"/>
-
-  <!--
-    Letra F — traços limpos, sem serifa
-    Montante vertical + 2 barras horizontais
-  -->
-  <!-- Montante vertical do F -->
-  <rect x="22" y="26" width="5" height="48" fill="#F5F2EC"/>
-  <!-- Barra superior do F -->
-  <rect x="22" y="26" width="26" height="5" fill="#F5F2EC"/>
-  <!-- Barra do meio do F -->
-  <rect x="22" y="46" width="20" height="4" fill="#F5F2EC"/>
+  <!-- Círculo ocre -->
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#A07840" stroke-width="4"/>
 
   <!--
-    Letra M — dois montantes + dois diagonais centrais
-    Montante esquerdo, diagonal esquerda, diagonal direita, montante direito
+    Letra F — sem serifa, bold
+    Montante vertical + barra superior + barra do meio
   -->
-  <!-- Montante esquerdo do M -->
-  <rect x="55" y="26" width="5" height="48" fill="#F5F2EC"/>
-  <!-- Montante direito do M -->
-  <rect x="73" y="26" width="5" height="48" fill="#F5F2EC"/>
+  <!-- Montante vertical F -->
+  <rect x="34" y="52" width="14" height="96" fill="#A07840"/>
+  <!-- Barra superior F -->
+  <rect x="34" y="52" width="52" height="14" fill="#A07840"/>
+  <!-- Barra do meio F -->
+  <rect x="34" y="91" width="40" height="12" fill="#A07840"/>
 
   <!--
-    Diagonais do M usando polygon
-    Diagonal esquerda: desce do topo esquerdo até o centro base
-    Diagonal direita:  desce do topo direito até o centro base
+    Letra M — com detalhe do V invertido no centro
+    Dois montantes verticais + dois diagonais que se encontram
+    formando um V apontado para baixo no centro superior
   -->
-  <!-- Diagonal esquerda (para baixo-direita até centro) -->
-  <polygon points="55,26 60,26 69.5,55 64.5,55" fill="#F5F2EC"/>
-  <!-- Diagonal direita (para baixo-esquerda até centro) -->
-  <polygon points="73,26 78,26 68.5,55 63.5,55" fill="#F5F2EC"/>
+  <!-- Montante esquerdo M -->
+  <rect x="102" y="52" width="14" height="96" fill="#A07840"/>
+  <!-- Montante direito M -->
+  <rect x="154" y="52" width="14" height="96" fill="#A07840"/>
+  <!-- Diagonal esquerda (desce do topo esquerdo até o vértice central) -->
+  <polygon points="102,52 116,52 137,100 123,100" fill="#A07840"/>
+  <!-- Diagonal direita (desce do topo direito até o vértice central) -->
+  <polygon points="154,52 168,52 147,100 133,100" fill="#A07840"/>
+  <!-- Vértice V (triângulo pontado para baixo, detalhe refinado) -->
+  <polygon points="123,100 147,100 135,118" fill="#A07840"/>
 
-  <!-- Detalhe: linha ocre fina abaixo das letras -->
-  <rect x="22" y="78" width="56" height="1.5" fill="#A07840"/>
 </svg>
