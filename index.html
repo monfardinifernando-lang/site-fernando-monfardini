@@ -98,15 +98,25 @@
           Vamos conversar
         </a>
 
-        <!-- Links de redes sociais -->
+        <!-- Links de redes sociais (SVG inline para garantir renderização sem CDN) -->
         <div class="hero__social" role="list" aria-label="Redes sociais">
           <a href="https://www.linkedin.com/in/fernandomonfardini/" target="_blank" rel="noopener noreferrer"
             class="hero__social-link" aria-label="LinkedIn de Fernando Monfardini" role="listitem">
-            <i data-lucide="linkedin" aria-hidden="true"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
           </a>
           <a href="https://www.instagram.com/fernandomonfardini/" target="_blank" rel="noopener noreferrer"
             class="hero__social-link" aria-label="Instagram de Fernando Monfardini" role="listitem">
-            <i data-lucide="instagram" aria-hidden="true"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
           </a>
         </div>
       </div>
@@ -139,21 +149,33 @@
           <h3 class="reconhecimentos__titulo">Reconhecimentos</h3>
           <ul class="reconhecimentos__lista" role="list">
 
+            <!-- 2026 — mais recente primeiro -->
             <li class="rec__item">
-              <span class="rec__ano">2024</span>
+              <span class="rec__ano">2026</span>
               <div class="rec__info">
                 <a
-                  href="https://analise.com/analise-executivos/confira-os-finalistas-do-ranking-executivos-de-compliance-mais-admirados-2024"
+                  href="https://www.complianceweek.com/ethics-culture/2026-excellence-in-compliance-awards-rising-star-in-compliance-finalists/"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="rec__link"
                 >
-                  Finalista — Executivos de Compliance Mais Admirados
+                  Finalista — Rising Stars in Compliance
                 </a>
+                <span class="rec__fonte">Excellence in Compliance Awards · Compliance Week</span>
+              </div>
+            </li>
+
+            <li class="rec__item">
+              <span class="rec__ano">2026</span>
+              <div class="rec__info">
+                <span class="rec__link rec__link--plain">
+                  Finalista — Executivos de Compliance Mais Admirados
+                </span>
                 <span class="rec__fonte">Revista Análise Executivos</span>
               </div>
             </li>
 
+            <!-- 2025 -->
             <li class="rec__item">
               <span class="rec__ano">2025</span>
               <div class="rec__info">
@@ -184,12 +206,18 @@
               </div>
             </li>
 
+            <!-- 2024 -->
             <li class="rec__item">
-              <span class="rec__ano">2026</span>
+              <span class="rec__ano">2024</span>
               <div class="rec__info">
-                <span class="rec__link rec__link--plain">
+                <a
+                  href="https://analise.com/analise-executivos/confira-os-finalistas-do-ranking-executivos-de-compliance-mais-admirados-2024"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="rec__link"
+                >
                   Finalista — Executivos de Compliance Mais Admirados
-                </span>
+                </a>
                 <span class="rec__fonte">Revista Análise Executivos</span>
               </div>
             </li>
@@ -363,19 +391,33 @@
         <!-- Tagline -->
         <p class="footer__tagline">Integrity by Design</p>
 
-        <!-- Links de contato -->
+        <!-- Links de contato (SVG inline) -->
         <nav class="footer__social" aria-label="Links de contato">
-          <a href="mailto: fernando.monfardini@hotmail.com" class="footer__social-link"
+          <a href="mailto:fernando.monfardini@hotmail.com" class="footer__social-link"
             aria-label="Enviar e-mail para Fernando Monfardini">
-            <i data-lucide="mail" aria-hidden="true"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
           </a>
           <a href="https://www.linkedin.com/in/fernandomonfardini/" target="_blank" rel="noopener noreferrer"
             class="footer__social-link" aria-label="LinkedIn de Fernando Monfardini">
-            <i data-lucide="linkedin" aria-hidden="true"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
           </a>
           <a href="https://www.instagram.com/fernandomonfardini/" target="_blank" rel="noopener noreferrer"
             class="footer__social-link" aria-label="Instagram de Fernando Monfardini">
-            <i data-lucide="instagram" aria-hidden="true"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
           </a>
         </nav>
 
